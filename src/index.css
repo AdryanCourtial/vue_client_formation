@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .gradient-100 {
+        background-image: linear-gradient(-100deg, var(--tw-gradient-stops));
+    }
+
+    .gradient-r100 {
+        background-image: linear-gradient(100deg, var(--tw-gradient-stops));
+    }
+  }
