@@ -8,7 +8,6 @@
                 </div>
             </RouterLink>
         </div>
-    <input type="text" class="rounded-2xl h-10 w-[300px] border-[3px] text-center">
 </div>
 </template>
 
