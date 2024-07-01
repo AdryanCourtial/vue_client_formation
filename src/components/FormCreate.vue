@@ -2,11 +2,11 @@
     <div class=" flex absolute bg-black/40 w-full h-full top-0 left-0 justify-center items-center hover:cursor-pointer">
         <div class="relative h-[600px] w-[1000px] bg-my-white border-2 rounded-2xl hover:cursor-auto" @click.stop>
             <div v-if="props.interface === 'personnes'">
-                <form :action="PostDataPersonnes" action="/personnes">
+                <form action="http://127.0.0.1:8000/api/personnes" method="post">
                     <div class="flex flex-col gap-3">
                         <div>
                             <p> Nom </p>
-                            <input type="text" id="nom" v-model="dataPersonnes.nom">
+                            <input type="text" name="nom" v-model="dataPersonnes.nom">
                         </div>
                         <div>
                             <p> Prenom </p>
@@ -28,7 +28,7 @@
                             </datalist>
                         </div>
                         <div>
-                            <p> Localisation</p>
+                            <p>Localisation</p>
                             <input type="search" name="localisation" v-model="dataPersonnes.localisation" list="localisation-list">
                             <datalist id="localisation-list">
                                 <option v-for="item in LocalisationList" :key="item.id" :value="item.localisation"></option>
@@ -39,27 +39,30 @@
                 </form>
             </div>
             <div v-else-if="props.interface === 'entreprises'">
-                <form action="POST">
+                <form action="http://127.0.0.1:8000/api/entreprises" method="post">
                     <div class="flex flex-col gap-3">
                         <div>
                             <p> Nom </p>
-                            <input type="text" id="nom">
+                            <input type="text" name="nom" v-model="dataEntreprises.nom">
                         </div>
                         <div>
                             <p> Secteur D'activité </p>
-                            <input type="text" name="secteur_activite">
+                            <input type="search" name="secteur_activite" list="secteur_activite-list" v-model="dataEntreprises.secteur_activite">
+                            <datalist id="secteur_activite-list">
+                                <option v-for="item in SecteurActiviteList" :key="item.id" :value="item.secteur_activite"></option>
+                            </datalist>
                         </div>
                         <div>
                             <p> Code Postal </p>
-                            <input type="text" name="code_postal">
+                            <input type="text" name="code_postal" v-model="dataEntreprises.code_postal">
                         </div>
                         <div>
                             <p> Ville </p>
-                            <input type="text" name="Ville" >
+                            <input type="text" name="ville" v-model="dataEntreprises.ville">
                         </div>
                         <div>
                             <p> Chiffres D'affaires</p>
-                            <input type="text" name="chiffres_affaires">
+                            <input type="text" name="chiffres_affaires" v-model="dataEntreprises.chiffres_affaires">
                         </div>
                         <input type="submit" >
                     </div>
@@ -85,8 +88,17 @@ const dataPersonnes = reactive({
     localisation: ''
 })
 
+const dataEntreprises = reactive({
+    nom: '',
+    secteur_activite: '',
+    code_postal: '',
+    ville: '',
+    chiffres_affaires: ''
+})
+
 const LocalisationList = ref(null)
 const CiviliteList = ref(null)
+const SecteurActiviteList = ref(null)
 onMounted(async () => {
     try {
         const data = await axios.get("http://127.0.0.1:8000/api/localisations")
@@ -102,12 +114,19 @@ onMounted(async () => {
     } catch (error) {
         console.log("Petit Soucis ", error)
     }
+
+    try {
+        const data = await axios.get("http://127.0.0.1:8000/api/secteurs_activites")
+        SecteurActiviteList.value = data.data
+    } catch (error) {
+        console.log("Petit Soucis ", error)
+    }
 })
 
-const PostDataPersonnes = async () => {
-    console.log(dataPersonnes)
-    // const data = await axios.post('http://127.0.0.1:8000/api/personnes', dataPersonnes)
-}
+// const PostDataPersonnes = async () => {
+//     console.log(dataPersonnes)
+//     const data = await axios.post('http://127.0.0.1:8000/api/personnes', dataPersonnes)
+// }
 
 
 const props = defineProps({

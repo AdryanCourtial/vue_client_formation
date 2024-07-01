@@ -19,6 +19,10 @@
                 <p v-if="props.data.entreprise"> {{ props.data.entreprise.nom }}</p>
                 <p v-else> Cette Personnes n'a pas d'entreprise liée </p>
             </div>
+            <div class="flex flex-row gap-2 justify-end">
+                <ButtonModif />
+                <ButtonDelete :data="props.data" :interface="'personnes'"/>
+            </div>
         </div>
         <div v-else-if="props.data && props.interface === 'entreprises'" class="flex flex-col gap-12">
             <div class="flex flex-row justify-center">
@@ -38,6 +42,10 @@
                     <p class="" v-for="personne in props.data.personnes" :key="item"> - {{ personne.nom }} {{ personne.prenom }}</p>
                 </div>
             </div>
+            <div class="flex flex-row gap-2 justify-end">
+                <ButtonModif />
+                <ButtonDelete :data="props.data" :interface="'entreprises'"/>
+            </div>
         </div>
         <div v-else class="flex flex-col gap2">
         </div>
@@ -51,6 +59,9 @@
 
 <script setup>
 import { Suspense } from 'vue';
+import ButtonDelete from '@/components/ButtonDelete.vue'
+import ButtonModif from '@/components/ButtonModif.vue'
+
 const props = defineProps({
     data: {
         type: Object
