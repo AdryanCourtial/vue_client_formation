@@ -18,8 +18,8 @@ import { ref } from 'vue';
 
 const isOpen = ref(false)
 
-const togglePopIn = () => { 
-  isOpen.value = !isOpen.value 
+const togglePopIn = () => {
+  isOpen.value = !isOpen.value
   console.log(isOpen.value)
 }
 

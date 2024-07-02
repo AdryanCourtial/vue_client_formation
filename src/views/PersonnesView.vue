@@ -3,6 +3,10 @@
         <div class="flex mt-20 ml-12">
                 <Suspense>
                     <IndexAnnuaire :url="'http://127.0.0.1:8000/api/personnes'" @get_prop="ChangePropToShow" :interface="'personnes'"/>
+
+                    <template #fallback>
+                        <IndexAnnuaire />
+                    </template>
                 </Suspense>
                 <AboutAnnuaire :data="aboutProp" :interface="'personnes'"/>
             </div>

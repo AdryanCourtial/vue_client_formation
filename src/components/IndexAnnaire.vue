@@ -26,6 +26,8 @@
 import ResultAnnuairePersonnes from './ResultAnnuairePersonnes.vue'
 import axios from 'axios';
 import { ref, Suspense, onMounted } from 'vue';
+import { usePersonnesStore } from '@/store/Personnes';
+import { useEntreprisesStore } from '@/store/Entreprises';
 
 const props = defineProps({
     url : {
@@ -41,6 +43,9 @@ const list = ref([])
 const SearchQuery = ref("")
 const QueryTimeout = ref(0)
 const QueryResults = ref([])
+
+// const personnesStore = usePersonnesStore()
+// const entreprisesStore = useEntreprisesStore()
 
 const getSearchResults = () => {
     QueryResults.value = []
@@ -63,6 +68,10 @@ const getSearchResults = () => {
 
 
 onMounted(async () => {
+
+
+
+
     try {
         const request = await axios.get(props.url)
         propsAnnuaire.value = request.data

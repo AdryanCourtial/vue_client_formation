@@ -1,3 +1,4 @@
+const plugin = require('tailwindcss/plugin')
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -6,6 +7,7 @@ export default {
     './src/**/*.{js,jsx,ts,tsx,vue}',
   ],
   /** @type {import('tailwindcss').Config} */
+
   theme: {
     extend: {
     colors: {
@@ -23,6 +25,11 @@ export default {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
+  })
+],
 }
 
