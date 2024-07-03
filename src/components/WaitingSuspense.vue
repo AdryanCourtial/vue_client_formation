@@ -1,6 +1,6 @@
 <template>
-    <div :class='bg-slate-500 h'>
-
+    <div :class="'bg'">
+        
     </div>
 </template>
 

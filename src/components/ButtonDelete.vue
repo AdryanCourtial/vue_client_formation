@@ -4,21 +4,28 @@
 
 <script setup>
 import axios from 'axios';
+import { useEntreprisesStore } from '@/store/Entreprises';
+import { usePersonnesStore } from '@/store/Personnes';
 
 const props = defineProps({
     data: {
-        type: Object
+        type: Object,
+        required: true
     },
     interface: {
         type: String
     }
 })
 
+const personnesStore = usePersonnesStore()
+const entreprisesStore = useEntreprisesStore()
+
+
 const DeleteData = async () => {
-    try {
-        const data = await axios.delete(`http://127.0.0.1:8000/api/${props.interface}/${props.data.id}`)
-    } catch (error) {
-        console.log('Le delete na pas fonctionnais', error)
+    if (props.interface === 'entreprises') {
+        const response = await entreprisesStore.deleteEntreprises(props.data.id)
+    } else if (props.interface === 'personnes'){
+        const response = await personnesStore.deletePersonnes(props.data.id)
     }
 }
 </script>

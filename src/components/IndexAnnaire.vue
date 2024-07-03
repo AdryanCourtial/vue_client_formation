@@ -25,7 +25,7 @@
 <script setup>
 import ResultAnnuairePersonnes from './ResultAnnuairePersonnes.vue'
 import axios from 'axios';
-import { ref, Suspense, onMounted } from 'vue';
+import { ref, Suspense, onMounted, watch } from 'vue';
 import { usePersonnesStore } from '@/store/Personnes';
 import { useEntreprisesStore } from '@/store/Entreprises';
 
@@ -35,26 +35,27 @@ const props = defineProps({
     },
     interface: {
         type: String,
+    },
+    data: {
+        type: Object,
+        default: null
     }
 })
 
-const propsAnnuaire = ref(null)
 const list = ref([])
 const SearchQuery = ref("")
 const QueryTimeout = ref(0)
 const QueryResults = ref([])
 
-// const personnesStore = usePersonnesStore()
-// const entreprisesStore = useEntreprisesStore()
 
 const getSearchResults = () => {
     QueryResults.value = []
     clearTimeout(QueryTimeout.value)
     QueryTimeout.value = setTimeout(() => {
         if (SearchQuery.value === " ") {
-            list.value = propsAnnuaire.value
+            list.value = props.data
         } else {
-            propsAnnuaire.value.forEach(element => {
+            props.data.forEach(element => {
                 if (element.nom.toLowerCase().includes(SearchQuery.value.toLowerCase())) {
                     QueryResults.value.push(element)
                 } else if (props.interface === 'personnes' && element.prenom.toLowerCase().includes(SearchQuery.value.toLowerCase())){
@@ -66,20 +67,13 @@ const getSearchResults = () => {
     }, 300)
 }
 
+watch(() => props.data, (newVal) => {
+    list.value = newVal
+})
 
-onMounted(async () => {
 
-
-
-
-    try {
-        const request = await axios.get(props.url)
-        propsAnnuaire.value = request.data
-        list.value = propsAnnuaire.value
-        console.log(propsAnnuaire.value)
-    } catch (error) {
-        console.error("Probleme pas cool au niveau de la requete API", error);
-    }
+onMounted(() => {
+    list.value = props.data
 });
 
 </script>

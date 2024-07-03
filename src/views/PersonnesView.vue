@@ -2,10 +2,10 @@
     <main class="relative gradient-100  from-primary-color from-25% to-black to-25% flex-1">
         <div class="flex mt-20 ml-12">
                 <Suspense>
-                    <IndexAnnuaire :url="'http://127.0.0.1:8000/api/personnes'" @get_prop="ChangePropToShow" :interface="'personnes'"/>
+                    <IndexAnnuaire @get_prop="ChangePropToShow" :data="personnes" :interface="'personnes'"/>
 
                     <template #fallback>
-                        <IndexAnnuaire />
+                        Hello
                     </template>
                 </Suspense>
                 <AboutAnnuaire :data="aboutProp" :interface="'personnes'"/>
@@ -14,18 +14,28 @@
 </template>
 
 <script setup>
-import { Suspense, ref } from 'vue';
+import { Suspense, ref, onMounted, watch } from 'vue';
 import IndexAnnuaire from '../components/IndexAnnaire.vue';
 import AboutAnnuaire from '@/components/AboutAnnuaire.vue';
+import axios from 'axios';
+import { usePersonnesStore } from '@/store/Personnes';
+import { storeToRefs } from 'pinia';
 
+const propsAnnuaire = ref(null)
 var aboutProp = ref(null)
+
+const PersonnesStore = usePersonnesStore()
+const { personnes } = storeToRefs(PersonnesStore)
+PersonnesStore.getPersonnes()
 
 const ChangePropToShow = (prop) => {
     aboutProp.value = prop
     console.log(aboutProp)
 }
 
-
+onMounted(() => {
+    PersonnesStore.getPersonnes()
+});
 
 
 </script>
