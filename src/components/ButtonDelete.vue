@@ -1,5 +1,5 @@
 <template>
-    <button class="bg-red-600 p-1 rounded-lg border-2 border-black" @click="DeleteData"> Delete </button>
+    <button class="bg-red-600 p-1 rounded-lg border-2 border-black duration-300 hover:scale-110" @click="DeleteData"> Delete </button>
 </template>
 
 <script setup>

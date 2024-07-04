@@ -32,5 +32,18 @@ export const useEntreprisesStore = defineStore('entreprises', {
                     console.log(error)
                 })
         },
+        async insertEntreprises(data) {
+            try {
+                const response = axios.post('http://127.0.0.1:8000/api/entreprises', data)
+                console.log('La fonction a reussi et a inserré' , data)
+            } catch (error) {
+                console.log('L\'insertion n\'a pas fonctionné', error)
+            }
+        },
+        async changeEntreprises(data, id) {
+            return new Promise((resolve, reject) => {
+                const response = axios.put(`http://127.0.0.1:8000/api/entreprises/${id}`, data)
+            })
+        }
     }
 })

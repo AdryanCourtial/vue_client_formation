@@ -1,6 +1,5 @@
 <template>
     <div class="bg-white flex-1 ml-12 mr-12 border-1 rounded-3xl p-8 drop-shadow-result-annuaire">
-            <Suspense>
         <div v-if="props.data && props.interface === 'personnes'"class="flex flex-col gap-12">
             <div class="flex flex-row gap-2 justify-center text-3xl font-bold">
                 <p class="text-black uppercase"> {{ props.data.nom }} </p>
@@ -20,7 +19,7 @@
                 <p v-else> Cette Personnes n'a pas d'entreprise liée </p>
             </div>
             <div class="flex flex-row gap-2 justify-end">
-                <ButtonModif />
+                <ButtonModif :data="props.data" :interface="props.interface" />
                 <ButtonDelete :data="props.data" :interface="'personnes'"/>
             </div>
         </div>
@@ -43,17 +42,12 @@
                 </div>
             </div>
             <div class="flex flex-row gap-2 justify-end">
-                <ButtonModif />
+                <ButtonModif :data="props.data" :interface="props.interface" />
                 <ButtonDelete :data="props.data" :interface="'entreprises'"/>
             </div>
         </div>
         <div v-else class="flex flex-col gap2">
         </div>
-
-        <template #fallback>
-            OnLoading
-        </template>
-    </Suspense>
     </div>
 </template>
 

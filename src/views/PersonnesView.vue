@@ -5,7 +5,7 @@
                     <IndexAnnuaire @get_prop="ChangePropToShow" :data="personnes" :interface="'personnes'"/>
 
                     <template #fallback>
-                        Hello
+                        <WaitingSuspense :color="'#fffff'" :height="'400px'" :width="'850px'" />
                     </template>
                 </Suspense>
                 <AboutAnnuaire :data="aboutProp" :interface="'personnes'"/>
@@ -17,9 +17,9 @@
 import { Suspense, ref, onMounted, watch } from 'vue';
 import IndexAnnuaire from '../components/IndexAnnaire.vue';
 import AboutAnnuaire from '@/components/AboutAnnuaire.vue';
-import axios from 'axios';
 import { usePersonnesStore } from '@/store/Personnes';
 import { storeToRefs } from 'pinia';
+import WaitingSuspense from '@/components/WaitingSuspense.vue';
 
 const propsAnnuaire = ref(null)
 var aboutProp = ref(null)

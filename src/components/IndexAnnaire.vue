@@ -1,22 +1,21 @@
 <template>
     <div class="flex flex-col h-auto w-auto">
-        <div>
-            <input type="text" class="border-1 rounded-full w-[400px] h-10 mb-12 drop-shadow-result-annuaire text-center"
+        <div class="flex flex-row">
+            <input type="text" class="border-1 rounded-full w-[25vw] h-10 mb-12 drop-shadow-result-annuaire text-center"
             @input="getSearchResults"
             v-model="SearchQuery"
             placeholder="Veuillez rentrer un nom"
             >
+            <img src="/curseur.gif" alt="" class="h-10 w-10" >
+        </input>
 
         </div>
-            <div class="flex flex-col justify-start w-fit h-[450px] gap-2 overflow-y-auto overflow-hidden">
-                <Suspense v-for="prop in list" :key="prop.id">
-                    <div @click="$emit('get_prop', prop)">
-                        <ResultAnnuairePersonnes :props="prop"/>
-                    </div>
-                    <template #fallback>
-                        <h1 class="text-red-600 text-2xl"> HOOOOOO</h1>
-                    </template>
-                </Suspense>
+            <div class="flex flex-col justify-start w-fit h-[70vh] gap-2 overflow-y-auto overflow-hidde">
+                <div v-for="prop in list" :key="prop.id">
+                    <button  @click="$emit('get_prop', prop)">
+                        <ResultAnnuairePersonnes :data="prop" :interface="props.interface"/>
+                    </button>
+                </div>
             </div>
     </div>
 
@@ -24,10 +23,8 @@
 
 <script setup>
 import ResultAnnuairePersonnes from './ResultAnnuairePersonnes.vue'
-import axios from 'axios';
-import { ref, Suspense, onMounted, watch } from 'vue';
-import { usePersonnesStore } from '@/store/Personnes';
-import { useEntreprisesStore } from '@/store/Entreprises';
+import { ref, onMounted, watch } from 'vue';
+import VWave from 'v-wave';
 
 const props = defineProps({
     url : {

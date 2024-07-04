@@ -1,5 +1,5 @@
 {
-  "name": " vue_client_formation",
+  "name": "vue_client_formation",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -13,6 +13,7 @@
     "pinia": "^2.1.7",
     "react-router-dom": "^6.24.0",
     "single-spa-vue": "^3.0.0",
+    "v-wave": "^2.0.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
@@ -20,6 +21,7 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
+    "sass": "^1.77.6",
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1"
   }
