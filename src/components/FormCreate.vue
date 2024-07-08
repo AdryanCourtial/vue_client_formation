@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div v-if="isFinish" class="flex flex-col justify-center">
-                    <img src="/end.gif" alt="aspect-square h-12">
+                    <img src="/end.gif" alt="aspect-square h-12" class="w-32 h-32">
                     <p> Vôtre entreprise à été enregistrer avec succès </p>
                 </div>
             </div>
@@ -146,13 +146,21 @@ onMounted(async () => {
 })
 
 
-const postData = (param) => {
+const postData = async (param) => {
+    let response = null
     if (param === 'entreprises'){
-        entreprisesStore.insertEntreprises(dataEntreprises)
-        isFinish.value = true
+        response = await entreprisesStore.insertEntreprises(dataEntreprises)
+        console.log(response)
+
     } else if (param === 'personnes') {
-        personnesStore.insertPersonnes(dataPersonnes)
+        response = await personnesStore.insertPersonnes(dataPersonnes)
+        console.log(response)
+    }
+
+    if (response !== null && response.status == 200) {
         isFinish.value = true
+    } else {
+        alert("Erreur dans le Formulaire")
     }
 
     dataPersonnes.nom = ''

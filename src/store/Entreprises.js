@@ -36,6 +36,7 @@ export const useEntreprisesStore = defineStore('entreprises', {
             try {
                 const response = axios.post('http://127.0.0.1:8000/api/entreprises', data)
                 console.log('La fonction a reussi et a inserré' , data)
+                return response
             } catch (error) {
                 console.log('L\'insertion n\'a pas fonctionné', error)
             }

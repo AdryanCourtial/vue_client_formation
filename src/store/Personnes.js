@@ -8,11 +8,13 @@ export const usePersonnesStore = defineStore('personnes', {
     }),
 
     actions: {
-        async getPersonnes() {
-            const response = await axios.get('http://127.0.0.1:8000/api/personnes')
-            this.personnes = response.data
-            console.log(this.personnes)
-            return this.personnes
+        async getPersonnes(filter = null) {
+            switch (filter) {
+                case null:
+                    const response = await axios.get('http://127.0.0.1:8000/api/personnes')
+                    this.personnes = response.data
+                    return this.personnes
+            }
         },
          async deletePersonnes(todelete) {
                 return new Promise((resolve, reject) => {
@@ -34,10 +36,12 @@ export const usePersonnesStore = defineStore('personnes', {
         },
         async insertPersonnes(data) {
             try {
-                const response = axios.post('http://127.0.0.1:8000/api/personnes', data)
+                const response = await axios.post('http://127.0.0.1:8000/api/personnes', data)
                 console.log('La fonction a reussi et a inserré' , data)
+                return response
             } catch (error) {
                 console.log('L\'insertion n\'a pas fonctionné', error)
+                return response
             }
         },
         async changePersonnes(data, id) {

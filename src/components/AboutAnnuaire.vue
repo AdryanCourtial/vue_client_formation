@@ -37,8 +37,14 @@
             </div>
             <div class="flex flex-col items-center gap-4">
                 <p class="text-lg self-start"> Personne(s) :</p>
-                <div class="flex flex-col border-2 border-black w-[20vw] h-[25vh] p-2 rounded-xl gap-2 overflow-auto">
-                    <p class="" v-for="personne in props.data.personnes" :key="item"> - {{ personne.nom }} {{ personne.prenom }}</p>
+                <div class="flex flex-row gap-4">
+                    <div class="flex flex-col border-2 border-black w-[20vw] h-[25vh] p-2 rounded-xl gap-2 overflow-auto">
+                        <p class="" v-for="personne in props.data.personnes" :key="item"> - {{ personne.nom }} {{ personne.prenom }}</p>
+                    </div>
+                    <div class="flex flex-col">
+                        <button class="bg-green-button h-8 rounded-lg p-1" @click="TogglePopupAddPersonnes"> Add Personnes </button>
+                        <SearchBarre v-if="addPersonnesIsOpen"></SearchBarre>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-row gap-2 justify-end">
@@ -52,9 +58,10 @@
 </template>
 
 <script setup>
-import { Suspense } from 'vue';
+import { Suspense, ref } from 'vue';
 import ButtonDelete from '@/components/ButtonDelete.vue'
 import ButtonModif from '@/components/ButtonModif.vue'
+import SearchBarre from '@/components/SearchBarre.vue'
 
 const props = defineProps({
     data: {
@@ -64,6 +71,12 @@ const props = defineProps({
         type: String
     }
 })
+
+const addPersonnesIsOpen = ref(false)
+
+const TogglePopupAddPersonnes = () => {
+    addPersonnesIsOpen.value = !addPersonnesIsOpen.value
+}
 </script>
 
 <style lang="scss" scoped>
